@@ -15,20 +15,17 @@ repositories {
     mavenCentral()
     maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
-dependencies {
-
-}
 
 dependencies {
-    //implementation(compose.desktop.currentOs)
-    //implementation(project(":common"))
+    implementation(compose.desktop.currentOs)
+    implementation(project(":common"))
 }
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-/*application {
+application {
     mainClass.set("MainKt")
-}*/
+}
 

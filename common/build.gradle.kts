@@ -1,13 +1,13 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+
 
 plugins {
     kotlin("multiplatform")
-    id("org.jetbrains.compose") version "0.3.1"
-    //kotlin("plugin.serialization")
-    //kotlin("native.cocoapods")
+    //id("org.jetbrains.compose") version "0.3.1"
+    kotlin("plugin.serialization")
+    id("org.jetbrains.kotlin.native.cocoapods")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    //id("kotlin-parcelize")
+    id("kotlin-parcelize")
 }
 
 group = "fr.abdel"
@@ -25,14 +25,22 @@ android {
 }
 
 kotlin {
+    val sdkName: String? = System.getenv("SDK_NAME")
+
+    val isiOSDevice = sdkName.orEmpty().startsWith("iphoneos")
+    if (isiOSDevice) {
+        iosArm64("iOS")
+    } else {
+        iosX64("iOS")
+    }
 
     android()
 
-    /*cocoapods {
+    cocoapods {
         // Configure fields required by CocoaPods.
         summary = "Some description for a Kotlin/Native module"
         homepage = "Link to a Kotlin/Native module homepage"
-    }*/
+    }
 
 
 
@@ -53,7 +61,7 @@ kotlin {
 
     }
 
-    iosArm64 {
+    ios {
 
     }
     js() {
@@ -99,6 +107,7 @@ kotlin {
                 //implementation("io.insert-koin:koin-android-viewmodel:2.2.2")
                 implementation("io.insert-koin:koin-androidx-compose:3.0.1")
                 implementation("io.insert-koin:koin-androidx-workmanager:3.0.1")
+                implementation("org.jetbrains.kotlin:kotlin-native-utils:1.5.0")
             }
         }
         val androidTest by getting {
@@ -108,23 +117,23 @@ kotlin {
         }
         val desktopMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:apache-driver:1.5.0")
+                implementation("io.ktor:ktor-client-apache:1.5.0")
+                implementation("com.squareup.sqldelight:jdbc-driver:1.5.0")
+                implementation("com.squareup.sqldelight:sqlite-driver:1.5.0")
                 //implementation(Ktor.slf4j)
-                //implementation(SqlDelight.jdbcDriver)
-                //implementation(SqlDelight.sqlliteDriver)
             }
 
 
         }
         val desktopTest by getting
-        val iosArm64Main by getting {
+        val iosMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:1.5.3")
                 implementation("com.squareup.sqldelight:native-driver:1.5.0")
             }
 
         }
-        val iosArm64Test by getting
+        val iosTest by getting
         val jsMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-js:1.5.3")
@@ -141,11 +150,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdk = 29
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(29)
+        minSdk = 24
+        targetSdk = 29
     }
 
     buildFeatures {
@@ -154,7 +163,8 @@ android {
     }
 }
 
-val packForXcode by tasks.creating(Sync::class) {
+
+/*val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
@@ -165,7 +175,7 @@ val packForXcode by tasks.creating(Sync::class) {
     val targetDir = File(buildDir, "xcode-frameworks")
     from({ framework.outputDirectory })
     into(targetDir)
-}
+}*/
 
 /*sqldelight {
     database("AppDatabase") {
@@ -174,7 +184,7 @@ val packForXcode by tasks.creating(Sync::class) {
     }
 }*/
 
-tasks.getByName("build").dependsOn(packForXcode)
+/*tasks.getByName("build").dependsOn(packForXcode)
 dependencies {
     implementation("com.google.android.gms:play-services-ads-lite:20.1.0")
-}
+}*/

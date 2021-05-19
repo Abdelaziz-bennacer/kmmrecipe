@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="common-desktop-1.0">
+    <output-path>C:\Users\User\AndroidStudioProjects\kmmrecipe\common\build\libs</output-path>
+    <root id="archive" name="common-desktop-1.0.jar">
+      <element id="module-output" name="kmmrecipe.common.desktopMain" />
+    </root>
+  </artifact>
+</component>

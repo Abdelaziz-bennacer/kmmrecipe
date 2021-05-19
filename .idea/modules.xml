@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/web/web.iml" filepath="$PROJECT_DIR$/web/web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/kmmrecipe.common.desktopMain.iml" filepath="$PROJECT_DIR$/.idea/modules/common/kmmrecipe.common.desktopMain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/kmmrecipe.common.desktopTest.iml" filepath="$PROJECT_DIR$/.idea/modules/common/kmmrecipe.common.desktopTest.iml" />
     </modules>
   </component>
 </project>
