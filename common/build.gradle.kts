@@ -1,4 +1,4 @@
-
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
@@ -163,7 +163,6 @@ android {
     }
 }
 
-
 /*val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
@@ -177,12 +176,12 @@ android {
     into(targetDir)
 }*/
 
-/*sqldelight {
+sqldelight {
     database("AppDatabase") {
-        packageName = "fr.abdel.untitled7.cache"
+        packageName = "fr.abdel.kmmrecipe.cache"
         sourceFolders = listOf("sqldelight")
     }
-}*/
+}
 
 /*tasks.getByName("build").dependsOn(packForXcode)
 dependencies {
